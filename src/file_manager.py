@@ -9,6 +9,14 @@ class FileManager:
 	
 	base_path = Path(NAS_ROOT).resolve()
 	
+	def get_file_path(self, path: str):
+		validated_path = self._validate_path(path)
+		
+		if not validated_path.is_file():
+			raise FileNotFoundError()
+			
+		return validated_path
+	
 	def _validate_path(self, path:str) -> Path:
 		requested_path = (self.base_path / path).resolve()
 		
@@ -99,6 +107,24 @@ class FileManager:
 		)
 		validated_source_path.rename(validated_dest_path)
 		return True
+		
+	def save_upload(self, file, destination: str = "."):
+		destination_path = self._validate_path(destination)
+		
+		if not destination_path.is_dir():
+			raise NotADirectoryError(
+				f"Not a Directory {destination}"
+			)
+			
+		file_path = destination_path / file.filename
+		
+		with open(file_path, "wb") as buffer:
+			shutil.copyfileobj(file.file,buffer)
+			
+		return {
+				"filename": file.filename,
+				"saved_to": str(file_path)
+		}
 		
 	def disk_usage(self):
 		usage = shutil.disk_usage(NAS_ROOT)
