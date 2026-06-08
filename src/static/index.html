@@ -1,0 +1,48 @@
+<!DOCTYPE hml>
+<html>
+	<head>
+		<title>NAS Dashboard</title>
+		<link rel = "stylesheet" href = "/static/style.css">
+	</head>
+	<body>
+		
+		<h1>NAS Dashboard</h1>
+		
+		<div>
+			<input type = "file" id="fileInput">
+			<button onclick = "uploadFile()">Upload</button>
+		</div>
+		
+		<h2>Disk Usage</h2>
+		<div id = "diskUsage">
+		</div>
+		<progress
+				id = "diskBar"
+				value "0"
+				max = "100"
+				style = "width: 50px;">			
+		</progress>
+		
+		<h2>Files</h2>
+					
+		<button onclick = "goBack()"><= Back</button>
+		<div id = "currentPath"></div>
+		
+		<table>
+			
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Size</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody id = "fileTable">
+			</tbody>
+			
+		</table>
+		
+		<script src = "/static/app.js"></script>
+		
+	</body>
+</html>

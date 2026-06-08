@@ -1,15 +1,23 @@
 from fastapi import FastAPI
 from fastapi import HTTPException, UploadFile, File
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from file_manager import FileManager, PathTraversalError
 from schemas import FileEntry
-from fastapi.responses import FileResponse
+
 
 file_manager = FileManager()
 app = FastAPI()
 
+app.mount(
+	"/static",
+	StaticFiles(directory = "static"),
+	name = "static"
+)
+
 @app.get("/")
 def root():
-	return{"message": "NAS API is working"}
+	return FileResponse("static/index.html")
 
 @app.get("/disk")
 def disk():
@@ -99,11 +107,6 @@ def upload(
 		raise HTTPException(
 			status_code = 404,
 			detail = str(e)
-		) 
-		 
-	
-
-
-
-
+		)
 		
+
