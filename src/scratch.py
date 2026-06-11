@@ -1,5 +1,7 @@
-import file_manager
+from auth import create_access_token
 
-fm = file_manager.FileManager()
+token = create_access_token(
+	{"sub" : "admin"}
+)
 
-fm.disk_usage()
+print(token)

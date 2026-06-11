@@ -7,7 +7,8 @@
 	<body>
 		
 		<h1>NAS Dashboard</h1>
-		
+		<button onclick="logout()">Logout</button>
+		<p>  </p>
 		<div>
 			<input type = "file" id="fileInput">
 			<button onclick = "uploadFile()">Upload</button>
@@ -26,7 +27,19 @@
 		<h2>Files</h2>
 					
 		<button onclick = "goBack()"><= Back</button>
+		<p> </p>
 		<div id = "currentPath"></div>
+		
+		<div>
+			<input
+				type="text"
+				id="folderName"
+				placeholder="Folder name">
+
+			<button onclick="createFolder()">
+				Create Folder
+			</button>
+		</div>
 		
 		<table>
 			
@@ -41,7 +54,30 @@
 			</tbody>
 			
 		</table>
-		
+		<br>
+		<div id="monitor-container">
+
+			<div class="card">
+				<h3>CPU</h3>
+				<p id="cpu">Loading...</p>
+			</div>
+
+			<div class="card">
+				<h3>RAM</h3>
+				<p id="ram">Loading...</p>
+			</div>
+
+			<div class="card">
+				<h3>Temperature</h3>
+				<p id="temp">Loading...</p>
+			</div>
+
+			<div class="card">
+				<h3>Disk</h3>
+				<p id="disk">Loading...</p>
+			</div>
+
+		</div>
 		<script src = "/static/app.js"></script>
 		
 	</body>

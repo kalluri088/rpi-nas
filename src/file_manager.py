@@ -29,15 +29,18 @@ class FileManager:
 		
 	def list_files(self, path: str = "."):
 		validated_path = self._validate_path(path)
-		
+
 		final_list_files_dir = []
+
 		for i in validated_path.iterdir():
-			if(i.is_dir()):
-				dir_temp = {"name":i.name, "is_dir":True}
+
+			if i.is_dir():
+				dir_temp = {"name": i.name, "is_dir": True, "size": self.get_folder_size(i)}
 				final_list_files_dir.append(dir_temp)
 			else:
-				file_temp = {"name":i.name, "is_dir":False, "size":i.stat().st_size}
+				file_temp = {"name": i.name, "is_dir": False, "size": i.stat().st_size}
 				final_list_files_dir.append(file_temp)
+
 		return final_list_files_dir
 			
 		
@@ -125,6 +128,20 @@ class FileManager:
 				"filename": file.filename,
 				"saved_to": str(file_path)
 		}
+		
+	def get_folder_size(self, path):
+		total_size = 0
+
+		for root, dirs, files in os.walk(path):
+			for file in files:
+				file_path = Path(root) / file
+
+				try:
+					total_size += file_path.stat().st_size
+				except OSError:
+					pass
+
+		return total_size
 		
 	def disk_usage(self):
 		usage = shutil.disk_usage(NAS_ROOT)
